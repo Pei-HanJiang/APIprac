@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="stock">
+        <label for="Stock_id">Choose a stock:</label>
+
+        <select name="Stock_id" id="Stock_id">
+          <option value="TSM">TSM</option>
+          <option value="NVDA">NVDA</option>
+        </select>
+    </div>
+   
+
+    <label for="Date">Choose a Date:</label>
+
+    <select name="Date" id="Date">
+      <option value="2023-1">2023-1</option>
+      <option value="2023-2">2023-2</option>
+      <option value="2023-3">2023-3</option>
+      <option value="2023-4">2023-4</option>
+      <option value="2023-5">2023-5</option>
+      <option value="2023-6">2023-6</option>
+      <option value="2023-7">2023-7</option>
+      <option value="2023-8">2023-8</option>
+      <option value="2023-9">2023-9</option>
+      <option value="2023-10">2023-10</option>
+      <option value="2023-11">2023-11</option>
+      <option value="2023-12">2023-12</option>
+      <option value="2024-1">2024-1</option>
+      <option value="2024-2">2024-2</option>
+      <option value="2024-3">2024-3</option>
+      <option value="2024-4">2024-4</option>
+      <option value="2024-5">2024-5</option>
+    </select>
+
+    <div class="btn">
+        <button id="submitBtn">Submit</button>
+    </div>
+
+    <div id="dataDisplay"></div>
+
+    <script>
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            var stock = document.getElementById("Stock_id").value;
+            var date = document.getElementById("Date").value;
+            console.log(stock)
+            console.log(date)
+
+
+            // Send a GET request to your API endpoint
+            fetch(`/${stock}/${date}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle response data
+                console.log(data);
+                displayData(data);
+            })
+            .catch(error => {
+                // Handle error
+                console.error("Error:", error);
+            });
+        });
+
+
+        function displayData(data) {
+            var dataDisplay = document.getElementById("dataDisplay");
+            dataDisplay.innerHTML = "";
+            data.forEach(function(item) {
+                var p = document.createElement("p");
+                p.textContent = item;
+                dataDisplay.appendChild(p);
+            });
+        }
+    </script>
+</body>
+</html>
